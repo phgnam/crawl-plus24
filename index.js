@@ -15,6 +15,7 @@ let page;
 
 async function crawl() {
   let urls = await page.evaluate(() => {
+    $AV('StockBoard.CW').processAll();
     let data = [];
     for (let i = 0; i < $("#boardData").children().length; i += 2) {
       const record = $("#boardData").children()[i];
@@ -74,8 +75,8 @@ app.get('*', async (req, res) => {
   });
 });
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8085;
 
 app.listen(port, function () {
-  console.log("Server is running port: 8080");
+  console.log("Server is running port:", port);
 });
