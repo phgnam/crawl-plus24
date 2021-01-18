@@ -8,12 +8,15 @@ let browserInstance;
 let page;
 (async () => {
   browserInstance = await browserObject.startBrowser();
-  page = await browserInstance.newPage();
-  await page.goto("https://plus24.mbs.com.vn/apps/StockBoard/MBS/CW.html");
-  await page.waitForSelector("#boardData");
+  // page = await browserInstance.newPage();
+  // await page.goto("https://plus24.mbs.com.vn/apps/StockBoard/MBS/CW.html");
+  // await page.waitForSelector("#boardData");
 })()
 
 async function crawl() {
+  page = await browserInstance.newPage();
+  await page.goto("https://plus24.mbs.com.vn/apps/StockBoard/MBS/CW.html");
+  await page.waitForSelector("#boardData");
   let urls = await page.evaluate(() => {
     $AV('StockBoard.CW').processAll();
     let data = [];
@@ -61,6 +64,7 @@ async function crawl() {
     }
     return data
   })
+  await page.close()
   return urls
 }
 // let browserInstance = browserObject.startBrowser();
