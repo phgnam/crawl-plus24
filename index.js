@@ -1,4 +1,8 @@
 const express = require('express');
+const fs = require('fs');
+const csv = require('csv-stringify/lib/sync');
+const path = require('path');
+const moment = require('moment');
 const app = express();
 const browserObject = require('./browser');
 const scraperController = require('./pageController');
@@ -24,42 +28,42 @@ async function crawl() {
       const record = $("#boardData").children()[i];
       const metrics = $("#boardData").find(record).children();
       data.push({
-        "Mã CQ": $("#boardData").find(metrics[0]).text().trim(),
-        "Tổ chức phát hành": $("#boardData").find(metrics[1]).children().first().text().trim(),
-        "Ngày đáo hạn": $("#boardData").find(metrics[1]).children().last().text().trim(),
-        "Trần": $("#boardData").find(metrics[2]).text().trim(),
-        "Sàn": $("#boardData").find(metrics[3]).text().trim(),
-        "Tham chiếu": $("#boardData").find(metrics[4]).text().trim(),
-        "Dư mua - Giá 3": $("#boardData").find(metrics[5]).text().trim(),
-        "Dư mua - KL 3": $("#boardData").find(metrics[6]).text().trim(),
-        "Dư mua - Giá 2": $("#boardData").find(metrics[7]).text().trim(),
-        "Dư mua - KL 2": $("#boardData").find(metrics[8]).text().trim(),
-        "Dư mua - Giá 1": $("#boardData").find(metrics[9]).text().trim(),
-        "Dư mua - KL 1": $("#boardData").find(metrics[10]).text().trim(),
-        "Khớp lệnh - Giá": $("#boardData").find(metrics[11]).text().trim(),
-        "Khớp lệnh - Phần trăn thay đổi %": $("#boardData").find(metrics[12]).children().first().text().trim(),
-        "Khớp lệnh - Phần trăn thay đổi \+/\-": $("#boardData").find(metrics[12]).children().last().text().trim(),
-        "Khớp lệnh - KL": $("#boardData").find(metrics[13]).text().trim(),
-        "Dư bán - Giá 1": $("#boardData").find(metrics[14]).text().trim(),
-        "Dư bán - KL 1": $("#boardData").find(metrics[15]).text().trim(),
-        "Dư bán - Giá 2": $("#boardData").find(metrics[16]).text().trim(),
-        "Dư bán - KL 2": $("#boardData").find(metrics[17]).text().trim(),
-        "Dư bán - Giá 3": $("#boardData").find(metrics[18]).text().trim(),
-        "Dư bán - KL 3": $("#boardData").find(metrics[19]).text().trim(),
-        "Tổng GT": $("#boardData").find(metrics[20]).children().first().text().trim(),
-        "Tổng KL": $("#boardData").find(metrics[20]).children().last().text().trim(),
-        "Dư - Mua": $("#boardData").find(metrics[21]).children().first().text().trim(),
-        "Dư - Bán": $("#boardData").find(metrics[22]).children().first().text().trim(),
-        "Giá - Cao": $("#boardData").find(metrics[21]).children().last().text().trim(),
-        "Giá - Thấp": $("#boardData").find(metrics[22]).children().last().text().trim(),
-        "NĐTNN - Mua": $("#boardData").find(metrics[23]).children().first().text().trim(),
-        "NĐTNN - Bán": $("#boardData").find(metrics[24]).children().first().text().trim(),
-        "Cơ sở - Mã CK": $("#boardData").find(metrics[23]).children().last().text().trim(),
-        "Cơ sở - Giá": $("#boardData").find(metrics[24]).children().last().text().trim(),
+        "Ma CQ": $("#boardData").find(metrics[0]).text().trim(),
+        "To chuc phat hanh": $("#boardData").find(metrics[1]).children().first().text().trim(),
+        "Ngay dao han": $("#boardData").find(metrics[1]).children().last().text().trim(),
+        "Tran": $("#boardData").find(metrics[2]).text().trim(),
+        "San": $("#boardData").find(metrics[3]).text().trim(),
+        "Tham chieu": $("#boardData").find(metrics[4]).text().trim(),
+        "Du mua - Gia 3": $("#boardData").find(metrics[5]).text().trim(),
+        "Du mua - KL 3": $("#boardData").find(metrics[6]).text().trim(),
+        "Du mua - Gia 2": $("#boardData").find(metrics[7]).text().trim(),
+        "Du mua - KL 2": $("#boardData").find(metrics[8]).text().trim(),
+        "Du mua - Gia 1": $("#boardData").find(metrics[9]).text().trim(),
+        "Du mua - KL 1": $("#boardData").find(metrics[10]).text().trim(),
+        "Khop lenh - Gia": $("#boardData").find(metrics[11]).text().trim(),
+        "Khop lenh - Phan tram thay doi %": $("#boardData").find(metrics[12]).children().first().text().trim(),
+        "Khop lenh - Phan tram thay doi \+/\-": $("#boardData").find(metrics[12]).children().last().text().trim(),
+        "Khop lenh - KL": $("#boardData").find(metrics[13]).text().trim(),
+        "Du ban - Gia 1": $("#boardData").find(metrics[14]).text().trim(),
+        "Du ban - KL 1": $("#boardData").find(metrics[15]).text().trim(),
+        "Du ban - Gia 2": $("#boardData").find(metrics[16]).text().trim(),
+        "Du ban - KL 2": $("#boardData").find(metrics[17]).text().trim(),
+        "Du ban - Gia 3": $("#boardData").find(metrics[18]).text().trim(),
+        "Du ban - KL 3": $("#boardData").find(metrics[19]).text().trim(),
+        "Tong GT": $("#boardData").find(metrics[20]).children().first().text().trim(),
+        "Tong KL": $("#boardData").find(metrics[20]).children().last().text().trim(),
+        "Du - Mua": $("#boardData").find(metrics[21]).children().first().text().trim(),
+        "Du - Ban": $("#boardData").find(metrics[22]).children().first().text().trim(),
+        "Gia - Cao": $("#boardData").find(metrics[21]).children().last().text().trim(),
+        "Gia - Thap": $("#boardData").find(metrics[22]).children().last().text().trim(),
+        "NDTNN - Mua": $("#boardData").find(metrics[23]).children().first().text().trim(),
+        "NDTNN - Ban": $("#boardData").find(metrics[24]).children().first().text().trim(),
+        "Co so - Ma CK": $("#boardData").find(metrics[23]).children().last().text().trim(),
+        "Co so - Gia": $("#boardData").find(metrics[24]).children().last().text().trim(),
         "TH": $("#boardData").find(metrics[25]).text().trim(),
-        "Độ lệch": $("#boardData").find(metrics[26]).text().trim(),
-        "TL CĐ": $("#boardData").find(metrics[27]).text().trim(),
-        "ĐHV": $("#boardData").find(metrics[28]).text().trim(),
+        "Do lech": $("#boardData").find(metrics[26]).text().trim(),
+        "TL CD": $("#boardData").find(metrics[27]).text().trim(),
+        "DHV": $("#boardData").find(metrics[28]).text().trim(),
       })
     }
     return data
@@ -70,7 +74,18 @@ async function crawl() {
 // let browserInstance = browserObject.startBrowser();
 
 app.get('/', async (req, res) => {
-  res.json(await crawl());
+  try {
+    fs.unlinkSync(path.resolve(__dirname, `./test.csv`))
+  } catch (e) {}
+  const resultRaw = await crawl()
+  // const currentDateString = moment().utc().format('YYYY-MM-DD_HH-mm-ss')
+  const fileName = `test.csv`
+  const filePath = path.resolve(__dirname, `./${fileName}`);
+  const csvData = csv(resultRaw, {
+    header: true
+  })
+  await fs.promises.writeFile(filePath, csvData);
+  res.download(filePath);
 });
 
 app.get('*', async (req, res) => {
