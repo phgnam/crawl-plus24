@@ -31,33 +31,33 @@ async function crawl() {
         "Ma CQ": $("#boardData").find(metrics[0]).text().trim(),
         "To chuc phat hanh": $("#boardData").find(metrics[1]).children().first().text().trim(),
         "Ngay dao han": $("#boardData").find(metrics[1]).children().last().text().trim(),
-        "Tran": $("#boardData").find(metrics[2]).text().trim(),
-        "San": $("#boardData").find(metrics[3]).text().trim(),
-        "Tham chieu": $("#boardData").find(metrics[4]).text().trim(),
-        "Du mua - Gia 3": $("#boardData").find(metrics[5]).text().trim(),
-        "Du mua - KL 3": $("#boardData").find(metrics[6]).text().trim(),
-        "Du mua - Gia 2": $("#boardData").find(metrics[7]).text().trim(),
-        "Du mua - KL 2": $("#boardData").find(metrics[8]).text().trim(),
-        "Du mua - Gia 1": $("#boardData").find(metrics[9]).text().trim(),
-        "Du mua - KL 1": $("#boardData").find(metrics[10]).text().trim(),
-        "Khop lenh - Gia": $("#boardData").find(metrics[11]).text().trim(),
-        "Khop lenh - Phan tram thay doi %": $("#boardData").find(metrics[12]).children().first().text().trim(),
-        "Khop lenh - Phan tram thay doi \+/\-": $("#boardData").find(metrics[12]).children().last().text().trim(),
-        "Khop lenh - KL": $("#boardData").find(metrics[13]).text().trim(),
-        "Du ban - Gia 1": $("#boardData").find(metrics[14]).text().trim(),
-        "Du ban - KL 1": $("#boardData").find(metrics[15]).text().trim(),
-        "Du ban - Gia 2": $("#boardData").find(metrics[16]).text().trim(),
-        "Du ban - KL 2": $("#boardData").find(metrics[17]).text().trim(),
-        "Du ban - Gia 3": $("#boardData").find(metrics[18]).text().trim(),
-        "Du ban - KL 3": $("#boardData").find(metrics[19]).text().trim(),
-        "Tong GT": $("#boardData").find(metrics[20]).children().first().text().trim(),
-        "Tong KL": $("#boardData").find(metrics[20]).children().last().text().trim(),
-        "Du - Mua": $("#boardData").find(metrics[21]).children().first().text().trim(),
-        "Du - Ban": $("#boardData").find(metrics[22]).children().first().text().trim(),
+        // "Tran": $("#boardData").find(metrics[2]).text().trim(),
+        // "San": $("#boardData").find(metrics[3]).text().trim(),
+        // "Tham chieu": $("#boardData").find(metrics[4]).text().trim(),
+        // "Du mua - Gia 3": $("#boardData").find(metrics[5]).text().trim(),
+        // "Du mua - KL 3": $("#boardData").find(metrics[6]).text().trim(),
+        // "Du mua - Gia 2": $("#boardData").find(metrics[7]).text().trim(),
+        // "Du mua - KL 2": $("#boardData").find(metrics[8]).text().trim(),
+        // "Du mua - Gia 1": $("#boardData").find(metrics[9]).text().trim(),
+        // "Du mua - KL 1": $("#boardData").find(metrics[10]).text().trim(),
+        // "Khop lenh - Gia": $("#boardData").find(metrics[11]).text().trim(),
+        // "Khop lenh - Phan tram thay doi %": $("#boardData").find(metrics[12]).children().first().text().trim(),
+        // "Khop lenh - Phan tram thay doi \+/\-": $("#boardData").find(metrics[12]).children().last().text().trim(),
+        // "Khop lenh - KL": $("#boardData").find(metrics[13]).text().trim(),
+        // "Du ban - Gia 1": $("#boardData").find(metrics[14]).text().trim(),
+        // "Du ban - KL 1": $("#boardData").find(metrics[15]).text().trim(),
+        // "Du ban - Gia 2": $("#boardData").find(metrics[16]).text().trim(),
+        // "Du ban - KL 2": $("#boardData").find(metrics[17]).text().trim(),
+        // "Du ban - Gia 3": $("#boardData").find(metrics[18]).text().trim(),
+        // "Du ban - KL 3": $("#boardData").find(metrics[19]).text().trim(),
+        // "Tong GT": $("#boardData").find(metrics[20]).children().first().text().trim(),
+        // "Tong KL": $("#boardData").find(metrics[20]).children().last().text().trim(),
+        // "Du - Mua": $("#boardData").find(metrics[21]).children().first().text().trim(),
+        // "Du - Ban": $("#boardData").find(metrics[22]).children().first().text().trim(),
         "Gia - Cao": $("#boardData").find(metrics[21]).children().last().text().trim(),
         "Gia - Thap": $("#boardData").find(metrics[22]).children().last().text().trim(),
-        "NDTNN - Mua": $("#boardData").find(metrics[23]).children().first().text().trim(),
-        "NDTNN - Ban": $("#boardData").find(metrics[24]).children().first().text().trim(),
+        // "NDTNN - Mua": $("#boardData").find(metrics[23]).children().first().text().trim(),
+        // "NDTNN - Ban": $("#boardData").find(metrics[24]).children().first().text().trim(),
         "Co so - Ma CK": $("#boardData").find(metrics[23]).children().last().text().trim(),
         "Co so - Gia": $("#boardData").find(metrics[24]).children().last().text().trim(),
         "TH": $("#boardData").find(metrics[25]).text().trim(),
@@ -75,11 +75,11 @@ async function crawl() {
 
 app.get('/', async (req, res) => {
   try {
-    fs.unlinkSync(path.resolve(__dirname, `./test.csv`))
+    fs.unlinkSync(path.resolve(__dirname, `./Thong_ke_CK.csv`))
   } catch (e) {}
   const resultRaw = await crawl()
   // const currentDateString = moment().utc().format('YYYY-MM-DD_HH-mm-ss')
-  const fileName = `test.csv`
+  const fileName = `Thong_ke_CK.csv`
   const filePath = path.resolve(__dirname, `./${fileName}`);
   const csvData = csv(resultRaw, {
     header: true
